@@ -3,35 +3,55 @@
 import { useState } from "react";
 import FetchDataExample from "../components/FetchDataExample"
 import CounterExample from "../components/CounterExample"
+import FormEvents from "@/components/FormEvents";
+import Link from "next/link"
+import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
+import "./globals.css"
 
 
 
 export default function Home() {
-  const [inputValue, setInputValue] = useState("");
+  const router = useRouter();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    alert(`Submitted: ${inputValue}`)
+  // Alternatively, use navigation
+  const navigation = (name) => {
+    router.push(name);
   }
+console.log("Router :", router)
   return (
     <div className={styles.page}>
       <main className={styles.main}>
-        <h1>Home Page</h1>
+        <h1>Linking</h1>
+        <ul>
+          <h2>Through Link</h2>
+          <li>
+            <Link href={"/about"}>Go to About Page</Link>
+          </li>
+          <li>
+            <Link href={"/contact"}>Go to Contact Page</Link>
+          </li>
+        </ul>
 
-        {/* Form Event */}
-        <form onSubmit={handleSubmit}>
-          <input type="text" value={inputValue} placeholder="Enter your name"
-            onChange={(e)=>setInputValue(e.target.value)} />
-          <button type="submit">Submit</button>
-        </form>
+        <div>
+          <h2>Through useRouter Hook</h2>
+          {/* <button onClick={() => router.push("/about")}>Go to About Page</button>
+          <button onClick={() => router.push("/contact")}>Go to Contact Page</button> */}
+
+          {/* Alternatively */}
+          <button onClick={() => navigation("/about")}>Go to About Page</button>
+          <button onClick={() => navigation("/contact")}>Go to Contact Page</button>
+    </div>
       </main>
 
+      {/* Handling Events */}
+      {/* < FormEvents/> */}
+
       {/* Fetch API Data */}
-      <FetchDataExample />
+      {/* <FetchDataExample /> */}
 
       {/* Counter Example */}
-      <CounterExample/>
+      {/* <CounterExample/> */}
     </div>
   );
 }
